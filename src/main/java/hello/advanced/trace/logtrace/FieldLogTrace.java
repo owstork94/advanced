@@ -4,7 +4,7 @@ import hello.advanced.trace.TraceId;
 import hello.advanced.trace.TraceStatus;
 import lombok.extern.slf4j.Slf4j;
 
-import static com.sun.jndi.ldap.LdapPoolManager.trace;
+//import static com.sun.jndi.ldap.LdapPoolManager.trace;
 
 @Slf4j
 public class FieldLogTrace implements LogTrace{
