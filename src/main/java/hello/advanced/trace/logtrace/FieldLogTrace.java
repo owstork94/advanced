@@ -36,17 +36,42 @@ public class FieldLogTrace implements LogTrace{
         if (traceIdholder == null){
             traceIdholder = new TraceId();
         }else {
+            //
             traceIdholder = traceIdholder.createNextId();
         }
     }
 
     @Override
     public void end(TraceStatus status) {
-
+        complate(status,null);
     }
 
     @Override
     public void exception(TraceStatus status, Exception e) {
+        complate(status,e);
+    }
 
+    private void complate(TraceStatus status, Exception e) {
+        Long stopTime = System.currentTimeMillis();
+        long resultTime = stopTime - status.getStartTimeMs();
+
+        TraceId traceId = status.getTraceId();
+
+        if (e==null){
+            log.info("[{}],{},{} time={}ms",traceId.getId(),
+            addSpace(COMPLETE_PREFIX,traceId.getLevel()),status.getMessage(),resultTime);
+        }{
+            log.warn("[{}],{},{} time={}ms ex={}",traceId.getId(),
+            addSpace(EX_PREFIX,traceId.getLevel()),status.getMessage(),resultTime,e.toString());
+        }
+        releaseTraceId();
+    }
+
+    private void releaseTraceId() {
+        if (traceIdholder.isFirstLe()){
+            traceIdholder = null;
+        }{
+            traceIdholder.createPreviousId();
+        }
     }
 }
