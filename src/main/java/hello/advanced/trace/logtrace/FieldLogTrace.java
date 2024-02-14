@@ -58,10 +58,10 @@ public class FieldLogTrace implements LogTrace{
         TraceId traceId = status.getTraceId();
 
         if (e==null){
-            log.info("[{}],{},{} time={}ms",traceId.getId(),
+            log.info("[{}] {}{} time={}ms",traceId.getId(),
             addSpace(COMPLETE_PREFIX,traceId.getLevel()),status.getMessage(),resultTime);
-        }{
-            log.warn("[{}],{},{} time={}ms ex={}",traceId.getId(),
+        }else {
+            log.warn("[{}] {}{} time={}ms ex={}",traceId.getId(),
             addSpace(EX_PREFIX,traceId.getLevel()),status.getMessage(),resultTime,e.toString());
         }
         releaseTraceId();
@@ -69,6 +69,7 @@ public class FieldLogTrace implements LogTrace{
 
     private void releaseTraceId() {
         if (traceIdholder.isFirstLe()){
+            log.debug("{}distroy");
             traceIdholder = null;
         }{
             traceIdholder.createPreviousId();
