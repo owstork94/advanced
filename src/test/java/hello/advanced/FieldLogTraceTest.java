@@ -2,6 +2,7 @@ package hello.advanced;
 
 import hello.advanced.trace.TraceStatus;
 import hello.advanced.trace.logtrace.FieldLogTrace;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Executor;
@@ -9,8 +10,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class FieldLogTraceTest {
+@Slf4j
 
+public class FieldLogTraceTest {
     @Test
     void testParallelExecution() throws InterruptedException {
         ExecutorService executor = Executors.newFixedThreadPool(2); // 4개의 쓰레드를 가진 풀을 생성

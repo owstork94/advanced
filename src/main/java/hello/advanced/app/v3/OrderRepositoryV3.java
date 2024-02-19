@@ -15,7 +15,7 @@ public class OrderRepositoryV3 {
         try {
             status = trace.begin("OrderRepositoryv3.save");
             if (itemId.equals("ex")) {
-                throw new IllegalStateException("예외 발생");
+                throw new IllegalStateException("예외 발생!!!");
             }
             sleep(1000);
             trace.end(status);

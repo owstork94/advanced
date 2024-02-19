@@ -2,10 +2,10 @@ package hello.advanced.trace.logtrace;
 
 import hello.advanced.trace.TraceId;
 import hello.advanced.trace.TraceStatus;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
+
 
 @Slf4j
 public class ThreadLocalLogTrace implements LogTrace {
@@ -20,14 +20,14 @@ public class ThreadLocalLogTrace implements LogTrace {
         syncTraceId();
         TraceId traceId = traceIdHolder.get();
         Long startTime = System.currentTimeMillis();
-        log.info("[{}]{}{}",traceId.getId(),addspace(START_PREFIX,traceId.getLevel()),startTime);
+        log.info("[{}]{}{}",traceId.getId(),addspace(START_PREFIX,traceId.getLevel()),message);
         return new TraceStatus(traceId,startTime,message);
     }
 
     private Object addspace(String prefix,int level ) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < level; i++) {
-            sb.append((i == level-1)?"|"+prefix : "  |");
+            sb.append((i == level-1)?"|"+prefix : "|  ");
         }
         return  sb.toString();
     }
@@ -61,6 +61,7 @@ public class ThreadLocalLogTrace implements LogTrace {
         if (e == null){
             log.info("[{}]{}{} {}",traceId.getId(),addspace(COMPLETE_PREFIX, traceId.getLevel()),status.getMessage(),stopTime);
         }else {
+            log.info("message /// -> {}",e.getMessage());
             log.info("[{}]{}{} {}",traceId.getId(),addspace(EX_PREFIX, traceId.getLevel()),e.getMessage(),stopTime);
         }
         releaseTraceId();
