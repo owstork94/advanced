@@ -20,4 +20,49 @@ public class ContextV1Test {
         ContextV1 contextV11 = new ContextV1(strategyLogic2);
         contextV11.excute();
     }
+
+    @Test
+    void strategyV2(){
+        Strategy strategyLogic11 = new Strategy() {
+            @Override
+            public void call() {
+                log.info("비즈니스 로직 1-1");
+            }
+        };
+        log.info("class : {}",strategyLogic11);
+        ContextV1 contextV1 = new ContextV1(strategyLogic11);
+        contextV1.excute();
+
+
+        Strategy strategyLogic12 = new Strategy() {
+            @Override
+            public void call() {
+                log.info("비즈니스 로직 1-2");
+            }
+        };
+
+        ContextV1 contextV11 = new ContextV1(strategyLogic12);
+        contextV11.excute();
+    }
+
+
+    @Test
+    void strategyV3(){
+        ContextV1 contextV1 = new ContextV1(new Strategy() {
+            @Override
+            public void call() {
+                log.info("비즈니스로직 2-1");
+            }
+        });
+        contextV1.excute();
+    }
+
+    @Test
+    void strategyV4(){
+        ContextV1 contextV1 = new ContextV1(() -> log.info("비즈니스로직 3-1"));
+        contextV1.excute();
+
+        ContextV1 contextV11 = new ContextV1(() -> log.info("비즈니스로직 3-2"));
+        contextV11.excute();
+    }
 }
